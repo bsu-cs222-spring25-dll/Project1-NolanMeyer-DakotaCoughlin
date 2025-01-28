@@ -1,4 +1,4 @@
 Assignment Six\
 
 Contributors:\
-Dakota Coughlin\
+Dakota Coughlin\Nolan Meyer
