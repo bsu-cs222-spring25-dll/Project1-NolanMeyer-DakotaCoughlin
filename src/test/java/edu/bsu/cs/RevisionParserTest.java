@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,16 +14,24 @@ public class RevisionParserTest {
     public void returnsFirstRevisionNameTest() throws IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
         RevisionParser parser = new RevisionParser();
-        Revision firstRevisionName = parser.parse(sampleFile);
-        assertEquals("Miklogfeather",firstRevisionName.name);
+        List<Revision> firstRevisionName = parser.parse(sampleFile);
+        assertEquals("Miklogfeather",firstRevisionName.getFirst().name);
     }
 
     @Test
     public void returnsFirstRevisionTimeStampTest() throws IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
         RevisionParser parser = new RevisionParser();
-        Revision firstRevisionTimeStamp = parser.parse(sampleFile);
-        assertEquals("2023-09-07T18:34:43Z",firstRevisionTimeStamp.timeStampOfRevision);
+        List<Revision> firstRevisionTimeStamp = parser.parse(sampleFile);
+        assertEquals("2023-09-07T18:34:43Z",firstRevisionTimeStamp.getFirst().timeStampOfRevision);
+    }
+
+    @Test
+    public void returnsListOfSize4() throws IOException {
+        InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
+        RevisionParser parser = new RevisionParser();
+        List<Revision> revisionList = parser.parse(sampleFile);
+        assertEquals(4,revisionList.size());
     }
 
 }
