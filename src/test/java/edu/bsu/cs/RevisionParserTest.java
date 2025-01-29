@@ -1,5 +1,7 @@
 package edu.bsu.cs;
 
+import com.jayway.jsonpath.JsonPath;
+import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -32,6 +34,26 @@ public class RevisionParserTest {
         RevisionParser parser = new RevisionParser();
         List<Revision> revisionList = parser.parse(sampleFile);
         assertEquals(4,revisionList.size());
+    }
+
+    @Test
+    public void extraRevisionsTest() throws IOException {
+        InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
+        RevisionParser parser = new RevisionParser();
+        JSONArray revisions = parser.extractRevisions(sampleFile);
+        assertEquals(4,revisions.size());
+
+    }
+
+    @Test
+    public void convertRevisionsToListTest() throws IOException {
+        InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
+        RevisionParser parser = new RevisionParser();
+        JSONArray revisionArray = JsonPath.read(sampleFile,"$..revisions");
+        JSONArray parsedRevisions = (JSONArray) revisionArray.getFirst();
+        List<Revision> revisions = parser.convertRevisionsToList(parsedRevisions);
+        assertEquals(4,revisions.size());
+
     }
 
 }

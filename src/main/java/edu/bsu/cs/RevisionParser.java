@@ -12,17 +12,22 @@ import java.util.List;
 public class RevisionParser {
 
     public List<Revision> parse(InputStream input) throws IOException {
-        ArrayList<Revision> revisionsList = new ArrayList<Revision>();
+        JSONArray parsedRevisions = extractRevisions(input);
+        return convertRevisionsToList(parsedRevisions);
+    }
 
-        JSONArray revisionArray = JsonPath.read(input,"$..revisions");
-        JSONArray parsedRevisions = (JSONArray) revisionArray.getFirst();
+    public JSONArray extractRevisions(InputStream inputStream) throws IOException {
+        JSONArray revisionArray = JsonPath.read(inputStream,"$..revisions");
+        return (JSONArray) revisionArray.getFirst();
+    }
 
-        for(Object revision:parsedRevisions){
+    public List<Revision> convertRevisionsToList(JSONArray array) {
+        ArrayList<Revision> revisionsList = new ArrayList<>();
+
+        for(Object revision:array){
             LinkedHashMap<String,String> revisionConverted = (LinkedHashMap<String,String>) revision;
             revisionsList.add(new Revision(revisionConverted.get("user"),revisionConverted.get("timestamp")));
         }
-
-        return revisionsList;
+    return revisionsList;
     }
-
 }
