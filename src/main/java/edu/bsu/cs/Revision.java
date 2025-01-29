@@ -2,8 +2,8 @@ package edu.bsu.cs;
 
 public class Revision {
 
-    public String name;
-    public String timeStampOfRevision;
+    protected String name;
+    protected String timeStampOfRevision;
 
     public Revision(String name,String timeStampOfRevision){
         this.name = name;

@@ -16,12 +16,12 @@ public class RevisionParser {
         return convertRevisionsToList(parsedRevisions);
     }
 
-    public JSONArray extractRevisions(InputStream inputStream) throws IOException {
+    protected JSONArray extractRevisions(InputStream inputStream) throws IOException {
         JSONArray revisionArray = JsonPath.read(inputStream,"$..revisions");
         return (JSONArray) revisionArray.getFirst();
     }
 
-    public List<Revision> convertRevisionsToList(JSONArray array) {
+    protected List<Revision> convertRevisionsToList(JSONArray array) {
         ArrayList<Revision> revisionsList = new ArrayList<>();
 
         for(Object revision:array){
