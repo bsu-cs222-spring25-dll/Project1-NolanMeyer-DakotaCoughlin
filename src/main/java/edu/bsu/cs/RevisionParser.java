@@ -28,6 +28,6 @@ public class RevisionParser {
             LinkedHashMap<String,String> revisionConverted = (LinkedHashMap<String,String>) revision;
             revisionsList.add(new Revision(revisionConverted.get("user"),revisionConverted.get("timestamp")));
         }
-    return revisionsList;
+        return revisionsList;
     }
 }
