@@ -53,7 +53,6 @@ public class RevisionParserTest {
         JSONArray parsedRevisions = (JSONArray) revisionArray.getFirst();
         List<Revision> revisions = parser.convertRevisionsToList(parsedRevisions);
         assertEquals(4,revisions.size());
-
     }
 
 }
