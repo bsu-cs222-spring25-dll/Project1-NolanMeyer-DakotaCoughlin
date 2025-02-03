@@ -25,8 +25,11 @@ public class RevisionParser {
         ArrayList<Revision> revisionsList = new ArrayList<>();
 
         for(Object revision:array){
-            LinkedHashMap<String,String> revisionConverted = (LinkedHashMap<String,String>) revision;
-            revisionsList.add(new Revision(revisionConverted.get("user"),revisionConverted.get("timestamp")));
+            if(revision instanceof LinkedHashMap<?,?>) {
+                @SuppressWarnings("unchecked")
+                LinkedHashMap<String, String> revisionConverted = (LinkedHashMap<String, String>) revision;
+                revisionsList.add(new Revision(revisionConverted.get("user"), revisionConverted.get("timestamp")));
+            }
         }
         return revisionsList;
     }

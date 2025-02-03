@@ -49,8 +49,7 @@ public class RevisionParserTest {
     public void convertRevisionsToListTest() throws IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
         RevisionParser parser = new RevisionParser();
-        JSONArray revisionArray = JsonPath.read(sampleFile,"$..revisions");
-        JSONArray parsedRevisions = (JSONArray) revisionArray.getFirst();
+        JSONArray parsedRevisions = parser.extractRevisions(sampleFile);
         List<Revision> revisions = parser.convertRevisionsToList(parsedRevisions);
         assertEquals(4,revisions.size());
     }
