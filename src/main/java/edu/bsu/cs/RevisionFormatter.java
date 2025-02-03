@@ -10,6 +10,7 @@ public class RevisionFormatter {
 
         for(Revision revision:revisionList){
             System.out.printf("%d  %s",count,formatOutput(revision));
+            count++;
         }
 
     }
