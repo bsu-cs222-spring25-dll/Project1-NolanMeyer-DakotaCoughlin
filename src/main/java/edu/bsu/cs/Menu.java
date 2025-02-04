@@ -15,10 +15,15 @@ public class Menu {
     public void runMenu() throws IOException {
         System.out.print("Enter a title you would like revisions about:");
         String userInput = scnr.nextLine();
+        inputSearch(userInput);
+
+    }
+    public void inputSearch(String userInput) throws IOException {
         InputStream wikiResponse = wikipediaConnection.search(userInput);
         List<Revision> revisionList = parser.parse(wikiResponse);
         revisionFormatter.printRevisionList(revisionList);
     }
+
 
 
 
