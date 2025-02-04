@@ -3,6 +3,7 @@ package edu.bsu.cs;
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -11,8 +12,14 @@ import java.util.List;
 
 public class RevisionParser {
 
-    public List<Revision> parse(InputStream input) throws IOException {
-        JSONArray parsedRevisions = extractRevisions(input);
+    protected RevisionInputStream inputStream;
+
+    public RevisionParser(RevisionInputStream inputStream) throws IOException {
+        this.inputStream = inputStream;
+    }
+
+    public List<Revision> parse() throws IOException {
+        JSONArray parsedRevisions = extractRevisions(new ByteArrayInputStream(this.inputStream.inputStream));
         return convertRevisionsToList(parsedRevisions);
     }
 

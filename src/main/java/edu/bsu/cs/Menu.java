@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
-
+/*
 public class Menu {
 
     private final WikiConnection wikipediaConnection = new WikiConnection();
@@ -29,3 +29,5 @@ public class Menu {
 
 
 }
+
+ */

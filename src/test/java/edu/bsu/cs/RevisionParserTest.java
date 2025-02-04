@@ -3,6 +3,7 @@ package edu.bsu.cs;
 import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -14,32 +15,32 @@ public class RevisionParserTest {
     @Test
     public void returnsFirstRevisionNameTest() throws IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
-        RevisionParser parser = new RevisionParser();
-        List<Revision> firstRevisionName = parser.parse(sampleFile);
-        assertEquals("Miklogfeather",firstRevisionName.getFirst().name);
+        RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
+        List<Revision> firstRevisionName = parser.parse();
+        assertEquals("Miklogfeather", firstRevisionName.getFirst().name);
     }
 
     @Test
     public void returnsFirstRevisionTimeStampTest() throws IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
-        RevisionParser parser = new RevisionParser();
-        List<Revision> firstRevisionTimeStamp = parser.parse(sampleFile);
+        RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
+        List<Revision> firstRevisionTimeStamp = parser.parse();
         assertEquals("2023-09-07T18:34:43Z",firstRevisionTimeStamp.getFirst().timeStampOfRevision);
     }
 
     @Test
     public void returnsListOfSize4() throws IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
-        RevisionParser parser = new RevisionParser();
-        List<Revision> revisionList = parser.parse(sampleFile);
+        RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
+        List<Revision> revisionList = parser.parse();
         assertEquals(4,revisionList.size());
     }
 
     @Test
     public void extraRevisionsTest() throws IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
-        RevisionParser parser = new RevisionParser();
-        JSONArray revisions = parser.extractRevisions(sampleFile);
+        RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
+        JSONArray revisions = parser.extractRevisions(new ByteArrayInputStream(parser.inputStream.inputStream));
         assertEquals(4,revisions.size());
 
     }
@@ -47,8 +48,8 @@ public class RevisionParserTest {
     @Test
     public void convertRevisionsToListTest() throws IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
-        RevisionParser parser = new RevisionParser();
-        JSONArray parsedRevisions = parser.extractRevisions(sampleFile);
+        RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
+        JSONArray parsedRevisions = parser.extractRevisions(new ByteArrayInputStream(parser.inputStream.inputStream));
         List<Revision> revisions = parser.convertRevisionsToList(parsedRevisions);
         assertEquals(4,revisions.size());
     }
