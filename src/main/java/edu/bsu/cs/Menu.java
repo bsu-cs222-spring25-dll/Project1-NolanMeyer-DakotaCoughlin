@@ -23,7 +23,7 @@ public class Menu {
         InputStream wikiResponse = wikipediaConnection.search(userInput);
         parser = new RevisionParser(new RevisionInputStream(wikiResponse));
         List<Revision> revisionList = parser.parse();
-        //System.out.printf("Redirected to %s\n",parser.extractRedirect(new ByteArrayInputStream(parser.inputStream.inputStream)));
+        System.out.printf("Redirected to %s\n",parser.extractRedirect(new ByteArrayInputStream(parser.inputStream.inputStream)));
         revisionFormatter.printRevisionList(revisionList);
     }
 }
