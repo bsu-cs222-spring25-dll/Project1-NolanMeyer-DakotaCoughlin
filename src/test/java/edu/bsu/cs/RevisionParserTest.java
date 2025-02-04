@@ -54,4 +54,13 @@ public class RevisionParserTest {
         assertEquals(4,revisions.size());
     }
 
+    @Test
+    public void extractRedirectTest() throws IOException {
+        InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
+        RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
+        String parsedRedirect = parser.extractRedirect(new ByteArrayInputStream(parser.inputStream.inputStream));
+        assertEquals("Frank Zappa",parsedRedirect);
+
+    }
+
 }

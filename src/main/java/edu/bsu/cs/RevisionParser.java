@@ -40,4 +40,9 @@ public class RevisionParser {
         }
         return revisionsList;
     }
+
+    public String extractRedirect(InputStream inputStream) throws IOException {
+        JSONArray parsedRedirect = JsonPath.read(inputStream,"$..to");
+        return parsedRedirect.getFirst().toString();
+    }
 }

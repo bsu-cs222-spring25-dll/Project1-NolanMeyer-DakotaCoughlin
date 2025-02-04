@@ -1,14 +1,15 @@
 package edu.bsu.cs;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
-/*
+
 public class Menu {
 
     private final WikiConnection wikipediaConnection = new WikiConnection();
-    private final RevisionParser parser = new RevisionParser();
+    private RevisionParser parser;
     private final RevisionFormatter revisionFormatter = new RevisionFormatter();
     private final Scanner scnr = new Scanner(System.in);
 
@@ -20,14 +21,9 @@ public class Menu {
     }
     public void inputSearch(String userInput) throws IOException {
         InputStream wikiResponse = wikipediaConnection.search(userInput);
-        List<Revision> revisionList = parser.parse(wikiResponse);
+        parser = new RevisionParser(new RevisionInputStream(wikiResponse));
+        List<Revision> revisionList = parser.parse();
+        //System.out.printf("Redirected to %s\n",parser.extractRedirect(new ByteArrayInputStream(parser.inputStream.inputStream)));
         revisionFormatter.printRevisionList(revisionList);
     }
-
-
-
-
-
 }
-
- */
