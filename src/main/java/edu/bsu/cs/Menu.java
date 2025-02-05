@@ -19,7 +19,7 @@ public class Menu {
         inputSearch(userInput);
 
     }
-    public void inputSearch(String userInput) throws IOException {
+    private void inputSearch(String userInput) throws IOException {
         InputStream wikiResponse = wikipediaConnection.search(userInput);
         parser = new RevisionParser(new RevisionInputStream(wikiResponse));
         List<Revision> revisionList = parser.parse();

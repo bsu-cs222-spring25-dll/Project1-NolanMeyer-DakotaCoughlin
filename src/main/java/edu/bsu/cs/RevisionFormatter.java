@@ -6,11 +6,11 @@ public class RevisionFormatter {
 
     public void printRevisionList(List<Revision> revisionList){
 
-        int count = 1;
+        int lineNumber = 1;
 
         for(Revision revision:revisionList){
-            System.out.printf("%d  %s",count,formatOutput(revision));
-            count++;
+            System.out.printf("%d  %s",lineNumber,formatOutput(revision));
+            lineNumber++;
         }
 
     }
