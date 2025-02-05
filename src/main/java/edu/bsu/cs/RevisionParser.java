@@ -42,7 +42,13 @@ public class RevisionParser {
     }
 
     public String extractRedirect(InputStream inputStream) throws IOException {
+        String output = "";
         JSONArray parsedRedirect = JsonPath.read(inputStream,"$..to");
-        return parsedRedirect.getFirst().toString();
+
+        if(!parsedRedirect.isEmpty()){
+            output = String.format("Redirected to %s",parsedRedirect.getFirst().toString());
+        }
+
+        return output;
     }
 }
