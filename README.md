@@ -52,4 +52,7 @@ This will call the WikiConnection search method with will return us our input st
 ## Menu class
 This class is a very simple class that creates an instance of the menu class and calls it's runMenu method.
 
+## Authors
+Nolan Meyer
+Dakota Coughlin
 
