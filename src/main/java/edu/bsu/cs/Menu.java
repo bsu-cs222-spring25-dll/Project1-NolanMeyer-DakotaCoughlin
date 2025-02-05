@@ -1,7 +1,6 @@
 package edu.bsu.cs;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
@@ -13,17 +12,22 @@ public class Menu {
     private final RevisionFormatter revisionFormatter = new RevisionFormatter();
     private final Scanner scnr = new Scanner(System.in);
 
-    public void runMenu() throws IOException {
+    public void runMenu(){
         System.out.print("Enter a title you would like revisions about:");
         String userInput = scnr.nextLine();
-        inputSearch(userInput);
+        List<Revision> revisionList = inputSearch(userInput);
+        inputSearchPrint(revisionList);
+
 
     }
-    private void inputSearch(String userInput) throws IOException {
-        InputStream wikiResponse = wikipediaConnection.search(userInput);
-        parser = new RevisionParser(new RevisionInputStream(wikiResponse));
-        List<Revision> revisionList = parser.parse();
-        System.out.println(parser.extractRedirect(new ByteArrayInputStream(parser.inputStream.inputStream)));
-        revisionFormatter.printRevisionList(revisionList);
+    private List<Revision> inputSearch(String userInput) {
+            InputStream wikiResponse = wikipediaConnection.search(userInput);
+            parser = new RevisionParser(new RevisionInputStream(wikiResponse));
+            return parser.parse();
+    }
+
+    private void inputSearchPrint(List<Revision> revisionList){
+            System.out.println(parser.extractRedirect(new ByteArrayInputStream(parser.inputStreamInstance.inputStream)));
+            revisionFormatter.printRevisionList(revisionList);
     }
 }

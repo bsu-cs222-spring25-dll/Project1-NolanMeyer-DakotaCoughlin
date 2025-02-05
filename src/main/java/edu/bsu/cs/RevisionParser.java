@@ -7,25 +7,33 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public class RevisionParser {
 
-    protected RevisionInputStream inputStream;
+    protected RevisionInputStream inputStreamInstance;
 
     public RevisionParser(RevisionInputStream inputStream){
-        this.inputStream = inputStream;
+        this.inputStreamInstance = inputStream;
     }
 
-    public List<Revision> parse() throws IOException {
-        JSONArray parsedRevisions = extractRevisions(new ByteArrayInputStream(this.inputStream.inputStream));
-        return convertRevisionsToList(parsedRevisions);
+    public List<Revision> parse(){
+
+            JSONArray parsedRevisions = extractRevisions(new ByteArrayInputStream(this.inputStreamInstance.inputStream));
+            return convertRevisionsToList(parsedRevisions);
     }
 
-    protected JSONArray extractRevisions(InputStream inputStream) throws IOException {
-        JSONArray revisionArray = JsonPath.read(inputStream,"$..revisions");
-        return (JSONArray) revisionArray.getFirst();
+    protected JSONArray extractRevisions(InputStream inputStreamInstance){
+        try {
+            JSONArray revisionArray = JsonPath.read(inputStreamInstance,"$..revisions");
+            return (JSONArray) revisionArray.getFirst();
+        }catch (IOException e) {
+            ExceptionHandler.handleIOException(e, "Error while processing user input.");
+            return new JSONArray();
+        }
+
     }
 
     protected List<Revision> convertRevisionsToList(JSONArray array) {
@@ -41,14 +49,21 @@ public class RevisionParser {
         return revisionsList;
     }
 
-    public String extractRedirect(InputStream inputStream) throws IOException {
-        String output = "";
-        JSONArray parsedRedirect = JsonPath.read(inputStream,"$..to");
+    public String extractRedirect(InputStream inputStreamInstance){
+        try {
+            String output = "";
+            JSONArray parsedRedirect = JsonPath.read(inputStreamInstance,"$..to");
 
-        if(!parsedRedirect.isEmpty()){
-            output = String.format("Redirected to %s",parsedRedirect.getFirst().toString());
+            if(!parsedRedirect.isEmpty()){
+                output = String.format("Redirected to %s",parsedRedirect.getFirst().toString());
+            }
+
+            return output;
+        }catch (IOException e) {
+            ExceptionHandler.handleIOException(e, "Error while processing user input.");
+            String failed = "";
+            return failed;
         }
 
-        return output;
     }
 }

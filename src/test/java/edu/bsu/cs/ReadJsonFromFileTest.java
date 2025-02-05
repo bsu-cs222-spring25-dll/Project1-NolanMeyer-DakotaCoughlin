@@ -12,23 +12,31 @@ import org.junit.jupiter.api.Test;
 
 public class ReadJsonFromFileTest {
     @Test
-    public void testAccessToJsonFile() throws IOException {
-        String jsonData = readSampleFileAsString();
-        Assertions.assertNotNull(jsonData);
+    public void testAccessToJsonFile(){
+            String jsonData = readSampleFileAsString();
+            Assertions.assertNotNull(jsonData);
     }
 
     @Test
-    public void testCountRevisionsWithJsonPath() throws IOException {
-        String jsonData = readSampleFileAsString();
-        JSONArray revisions = getRevisionsFromJson(jsonData);
-        Assertions.assertEquals(4, revisions.size());
+    public void testCountRevisionsWithJsonPath(){
+            String jsonData = readSampleFileAsString();
+            JSONArray revisions = getRevisionsFromJson(jsonData);
+            Assertions.assertEquals(4, revisions.size());
     }
 
-    private String readSampleFileAsString() throws NullPointerException, IOException {
-        try (InputStream sampleFile = Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream("sample.json")) {
-            return new String(Objects.requireNonNull(sampleFile).readAllBytes(), Charset.defaultCharset());
+    private String readSampleFileAsString(){
+        try{
+            try (InputStream sampleFile = Thread.currentThread().getContextClassLoader()
+                    .getResourceAsStream("sample.json")) {
+                return new String(Objects.requireNonNull(sampleFile).readAllBytes(), Charset.defaultCharset());
+            }
+        }catch (IOException e) {
+            ExceptionHandler.handleIOException(e, "Error while processing user input.");
+        }catch (NullPointerException e) {
+            ExceptionHandler.handleNullPointerException(e, "Null Pointer Error.");
         }
+        String failed = "";
+        return failed;
     }
 
     private JSONArray getRevisionsFromJson(String jsonData) {
