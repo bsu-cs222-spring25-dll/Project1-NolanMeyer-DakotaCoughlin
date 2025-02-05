@@ -23,13 +23,13 @@ public class Menu {
     }
 
     private List<Revision> inputSearch(String userInput) {
-            InputStream wikiResponse = wikipediaConnection.search(userInput);
-            parser = new RevisionParser(new RevisionInputStream(wikiResponse));
-            return parser.parse();
+        InputStream wikiResponse = wikipediaConnection.search(userInput);
+        parser = new RevisionParser(new RevisionInputStream(wikiResponse));
+        return parser.parse();
     }
 
     private void inputSearchPrint(List<Revision> revisionList){
-            System.out.println(parser.extractRedirect(new ByteArrayInputStream(parser.inputStreamInstance.inputStream)));
-            revisionFormatter.printRevisionList(revisionList);
+        System.out.println(parser.extractRedirect(parser.inputStreamInstance.openInputStream()));
+        revisionFormatter.printRevisionList(revisionList);
     }
 }

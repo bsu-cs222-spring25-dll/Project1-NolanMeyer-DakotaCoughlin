@@ -1,5 +1,6 @@
 package edu.bsu.cs;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 
@@ -11,5 +12,9 @@ public class RevisionInputStream {
         }catch (Exception e) {
             System.err.println("Could not read from Wikipedia!");
         }
+    }
+
+    public ByteArrayInputStream openInputStream() {
+        return new ByteArrayInputStream(inputStream);
     }
 }
