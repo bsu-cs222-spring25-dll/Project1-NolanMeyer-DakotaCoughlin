@@ -4,10 +4,8 @@ import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -20,24 +18,23 @@ public class RevisionParser {
     }
 
     public List<Revision> parse(){
-
             JSONArray parsedRevisions = extractRevisions(new ByteArrayInputStream(this.inputStreamInstance.inputStream));
             return convertRevisionsToList(parsedRevisions);
     }
 
     protected JSONArray extractRevisions(InputStream inputStreamInstance){
+        JSONArray output = new JSONArray();
         try {
             JSONArray revisionArray = JsonPath.read(inputStreamInstance,"$..revisions");
-            return (JSONArray) revisionArray.getFirst();
-        }catch (IOException e) {
-            ExceptionHandler.handleIOException(e, "Error while processing user input.");
-            return new JSONArray();
+            output = (JSONArray) revisionArray.getFirst();
+        }catch (Exception e) {
+            System.err.println("No Wikipedia article was found for this title!");
         }
-
+        return output;
     }
 
     protected List<Revision> convertRevisionsToList(JSONArray array) {
-        ArrayList<Revision> revisionsList = new ArrayList<>();
+        List<Revision> revisionsList = new ArrayList<>();
 
         for(Object revision:array){
             if(revision instanceof LinkedHashMap<?,?>) {
@@ -50,20 +47,16 @@ public class RevisionParser {
     }
 
     public String extractRedirect(InputStream inputStreamInstance){
+        String output = "";
         try {
-            String output = "";
             JSONArray parsedRedirect = JsonPath.read(inputStreamInstance,"$..to");
 
             if(!parsedRedirect.isEmpty()){
                 output = String.format("Redirected to %s",parsedRedirect.getFirst().toString());
             }
-
-            return output;
-        }catch (IOException e) {
-            ExceptionHandler.handleIOException(e, "Error while processing user input.");
-            String failed = "";
-            return failed;
+        }catch (Exception e) {
+            System.err.println("Error while processing user input.");
         }
-
+        return output;
     }
 }

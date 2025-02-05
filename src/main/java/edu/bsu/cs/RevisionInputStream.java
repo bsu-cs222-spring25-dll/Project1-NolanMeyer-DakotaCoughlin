@@ -1,6 +1,5 @@
 package edu.bsu.cs;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 
@@ -9,10 +8,8 @@ public class RevisionInputStream {
     public RevisionInputStream(InputStream inputStream){
         try{
             this.inputStream = inputStream.readAllBytes();
-        }catch (IOException e) {
-            ExceptionHandler.handleIOException(e, "Error while processing user input.");
+        }catch (Exception e) {
+            System.err.println("Could not read from Wikipedia!");
         }
-
     }
-
 }

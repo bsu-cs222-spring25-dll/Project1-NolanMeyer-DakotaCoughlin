@@ -1,7 +1,6 @@
 package edu.bsu.cs;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -13,7 +12,6 @@ public class WikiConnection {
     public InputStream search(String pageTitle){
             String url = createRequestUrl(pageTitle);
             return getInputStream(url);
-
     }
 
     protected String createRequestUrl(String pageTitle){
@@ -24,16 +22,16 @@ public class WikiConnection {
     }
 
     private InputStream getInputStream(String url){
+        InputStream output = new ByteArrayInputStream(new byte[0]);
         try{
             URL urlConnection = new URL(url);
             URLConnection connection = urlConnection.openConnection();
             connection.setRequestProperty("User-Agent",
                     "Revision Reporter/0.1 (nolan.meyer@bsu.edu)");
-            return connection.getInputStream();
-        }catch (IOException e) {
-            ExceptionHandler.handleIOException(e, "Error while processing user input.");
+            output = connection.getInputStream();
+        }catch (Exception e) {
+            System.err.println("There seems to be a network error.");
         }
-        return new ByteArrayInputStream(new byte[0]);
-
+        return output;
     }
 }

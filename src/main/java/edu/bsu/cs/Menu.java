@@ -16,10 +16,12 @@ public class Menu {
         System.out.print("Enter a title you would like revisions about:");
         String userInput = scnr.nextLine();
         List<Revision> revisionList = inputSearch(userInput);
-        inputSearchPrint(revisionList);
 
-
+        if(!revisionList.isEmpty()) {
+            inputSearchPrint(revisionList);
+        }
     }
+
     private List<Revision> inputSearch(String userInput) {
             InputStream wikiResponse = wikipediaConnection.search(userInput);
             parser = new RevisionParser(new RevisionInputStream(wikiResponse));

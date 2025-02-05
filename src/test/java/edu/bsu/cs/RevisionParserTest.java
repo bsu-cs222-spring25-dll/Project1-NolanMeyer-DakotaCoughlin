@@ -64,7 +64,7 @@ public class RevisionParserTest {
         assert sampleFile != null;
         RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
         String parsedRedirect = parser.extractRedirect(new ByteArrayInputStream(parser.inputStreamInstance.inputStream));
-        assertEquals("Frank Zappa",parsedRedirect);
+        assertEquals("Redirected to Frank Zappa",parsedRedirect);
 
     }
 
