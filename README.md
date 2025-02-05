@@ -20,7 +20,7 @@ This method takes an input stream type. It will then read then extra the revisio
 This method will take a JSONArray. It will then loop through every item in that JSONArray and convert to a LinkedHashMap. After that it will extract the username and the timestamp and add it to a Revision object. It will then add that object to a list that will be returned. It does this process for every item in the JSONArray.
 
 ### extractRedirect method
-This method takes in an input stream. It will then parse out the part that will tell us if the request was redirected or not. It will return that value.
+This method takes in an input stream. It will then parse out the part that will tell us if the request was redirected or not. If there was no redirect found in the parse it will return an empty string. If there was a redirect found it will return the string such as "Redirected to {redirect found}"
 
 ### RevisionFormatter Class
 This class is responsible for formatting all of our output. Each revision that needed to be printed needed to follow this exact format: "Line:  timestamp  username".
