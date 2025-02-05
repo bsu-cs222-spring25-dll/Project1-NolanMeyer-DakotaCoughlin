@@ -14,7 +14,7 @@ public class RevisionParser {
 
     protected RevisionInputStream inputStream;
 
-    public RevisionParser(RevisionInputStream inputStream) throws IOException {
+    public RevisionParser(RevisionInputStream inputStream){
         this.inputStream = inputStream;
     }
 
