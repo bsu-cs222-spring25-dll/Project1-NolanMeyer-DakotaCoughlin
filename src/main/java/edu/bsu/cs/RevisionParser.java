@@ -28,7 +28,7 @@ public class RevisionParser {
             JSONArray revisionArray = JsonPath.read(inputStreamInstance,"$..revisions");
             output = (JSONArray) revisionArray.getFirst();
         }catch (Exception e) {
-            System.err.println("No Wikipedia article was found for this title!");
+            ExceptionHandler.handleException(e,"No Wikipedia article could be found!");
         }
         return output;
     }
@@ -55,7 +55,7 @@ public class RevisionParser {
                 output = String.format("Redirected to %s",parsedRedirect.getFirst().toString());
             }
         }catch (Exception e) {
-            System.err.println("Error while processing user input.");
+            ExceptionHandler.handleException(e,"Could not load the input stream!");
         }
         return output;
     }

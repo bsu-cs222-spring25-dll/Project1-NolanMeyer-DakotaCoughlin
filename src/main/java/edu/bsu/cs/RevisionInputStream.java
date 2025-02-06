@@ -10,7 +10,7 @@ public class RevisionInputStream {
         try{
             this.inputStream = inputStream.readAllBytes();
         }catch (Exception e) {
-            System.err.println("Could not read from Wikipedia!");
+            ExceptionHandler.handleException(e,"Couldn't find Wikipedia Article");
         }
     }
 

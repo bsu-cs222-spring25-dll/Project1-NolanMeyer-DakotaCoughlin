@@ -1,6 +1,5 @@
 package edu.bsu.cs;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
@@ -15,10 +14,17 @@ public class Menu {
     public void runMenu(){
         System.out.print("Enter a title you would like revisions about:");
         String userInput = scnr.nextLine();
-        List<Revision> revisionList = inputSearch(userInput);
 
-        if(!revisionList.isEmpty()) {
-            inputSearchPrint(revisionList);
+        if(validateUserInput(userInput)) {
+
+            List<Revision> revisionList = inputSearch(userInput);
+
+            if (!revisionList.isEmpty()) {
+                inputSearchPrint(revisionList);
+            }
+
+        }else{
+            System.err.println("Please give me a Wikipedia title!");
         }
     }
 
@@ -31,5 +37,9 @@ public class Menu {
     private void inputSearchPrint(List<Revision> revisionList){
         System.out.println(parser.extractRedirect(parser.inputStreamInstance.openInputStream()));
         revisionFormatter.printRevisionList(revisionList);
+    }
+
+    private boolean validateUserInput(String userInput){
+        return !userInput.isEmpty();
     }
 }
