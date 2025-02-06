@@ -25,18 +25,16 @@ public class ReadJsonFromFileTest {
     }
 
     private String readSampleFileAsString(){
+        String output = "";
         try{
             try (InputStream sampleFile = Thread.currentThread().getContextClassLoader()
                     .getResourceAsStream("sample.json")) {
-                return new String(Objects.requireNonNull(sampleFile).readAllBytes(), Charset.defaultCharset());
+                output = new String(Objects.requireNonNull(sampleFile).readAllBytes(), Charset.defaultCharset());
             }
-        }catch (IOException e) {
-            ExceptionHandler.handleIOException(e, "Error while processing user input.");
-        }catch (NullPointerException e) {
-            ExceptionHandler.handleNullPointerException(e, "Null Pointer Error.");
+        }catch (IOException | NullPointerException e) {
+            System.err.println("Couldn't find sample file!");
         }
-        String failed = "";
-        return failed;
+        return output;
     }
 
     private JSONArray getRevisionsFromJson(String jsonData) {

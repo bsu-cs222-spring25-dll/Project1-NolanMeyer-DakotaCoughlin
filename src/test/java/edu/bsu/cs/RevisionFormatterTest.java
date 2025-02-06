@@ -12,7 +12,6 @@ public class RevisionFormatterTest {
         Revision revisionTest = new Revision("Miklogfeather","2023-09-07T18:34:43Z");
         String formattedOutput = revisionFormatter.formatOutput(revisionTest);
         assertEquals("2023-09-07T18:34:43Z  Miklogfeather\n",formattedOutput);
-
     }
 
 }

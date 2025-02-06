@@ -45,7 +45,6 @@ public class RevisionParserTest {
         RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
         JSONArray revisions = parser.extractRevisions(new ByteArrayInputStream(parser.inputStreamInstance.inputStream));
         assertEquals(4,revisions.size());
-
     }
 
     @Test
@@ -65,7 +64,6 @@ public class RevisionParserTest {
         RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
         String parsedRedirect = parser.extractRedirect(new ByteArrayInputStream(parser.inputStreamInstance.inputStream));
         assertEquals("Redirected to Frank Zappa",parsedRedirect);
-
     }
 
 }
