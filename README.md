@@ -1,11 +1,20 @@
 # Wikepedia Revision Parser
-For this assigment we were tasked with creating an application that takes a Wikipedia title from the command line, and returns the most recent revisions in reverse chronological order. It will also tell you if any redirects were made. 
+For this assigment we were tasked with creating an application that takes a Wikipedia title from the command line, and returns the twenty one most recent revisions in reverse chronological order. It will also tell you if any redirects were made. If there is no Wikipedia article found it will give an error to the user, if no redirects were made it will simple just print out the revisions, if there is a network error it will also tell that to the user. 
+
+<img width="566" alt="Screenshot 2025-02-07 at 8 55 05 AM" src="https://github.com/user-attachments/assets/6a8437d5-295e-4431-a941-849fc17fd7a7" />
+<img width="532" alt="Screenshot 2025-02-07 at 8 59 57 AM" src="https://github.com/user-attachments/assets/9f93346c-7874-4cab-b631-97410e483ef0" />
+<img width="681" alt="Screenshot 2025-02-07 at 8 55 30 AM" src="https://github.com/user-attachments/assets/d41f3a71-6cdc-496f-9ee1-d3f2d07ee14f" />
+
+
 
 ## Revision class
 This class although simple, is a fundamental building block for the entire project. This contains two fields, a field for a username, and a field for a timestamp. This way we can further encapsulation and organization of our data.
 
 ## RevisionInputStream class
 This is another class that is very helpful. When using input streams once you use them they will close. Since, we will need to do parse the data more than once we will store the original input stream as a byte array. That way when we need to use it again we can easily look at the data and parse it again! 
+
+### openStream method
+This method allows us to easily open a ByteArrayInputStream. This allows to have a lot of flexibility to open an input stream multiple times so we can parse the data more than once. 
 
 ## RevisionParser class
 The RevisionParser class is the class responsible for doing all the parsing related to the revisions. It has multiple methods to make this happen. In order to instantiate this object you must pass it an instance of the RevisionInputStream class which is another class that we made for this project. 
