@@ -61,6 +61,12 @@ This will call the WikiConnection search method with will return us our input st
 ## Menu class
 This class is a very simple class that creates an instance of the menu class and calls it's runMenu method.
 
+## Exception Handler Class
+This class is used to handle exceptions. We created this to add another layer of abstraction so we have the flexibility to also show errors on a GUI for a the second iteration of this project. 
+
+### handleException
+This method takes an exception, and gives a message that we will use. It will then create an error message and print it to System.err.
+
 ## Authors
 Nolan Meyer
 Dakota Coughlin
