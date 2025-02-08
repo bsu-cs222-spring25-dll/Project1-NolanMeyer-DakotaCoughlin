@@ -24,6 +24,7 @@ public class WikiConnection {
     private InputStream getInputStream(String url){
         InputStream output = new ByteArrayInputStream(new byte[0]);
         try{
+            @SuppressWarnings("deprecation")
             URL urlConnection = new URL(url);
             URLConnection connection = urlConnection.openConnection();
             connection.setRequestProperty("User-Agent",
