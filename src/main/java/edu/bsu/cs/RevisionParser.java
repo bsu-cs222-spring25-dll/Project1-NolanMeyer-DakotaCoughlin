@@ -18,8 +18,8 @@ public class RevisionParser {
     }
 
     public List<Revision> parse(){
-            JSONArray parsedRevisions = extractRevisions(new ByteArrayInputStream(this.inputStreamInstance.inputStream));
-            return convertRevisionsToList(parsedRevisions);
+        JSONArray parsedRevisions = extractRevisions(new ByteArrayInputStream(this.inputStreamInstance.inputStream));
+        return convertRevisionsToList(parsedRevisions);
     }
 
     protected JSONArray extractRevisions(InputStream inputStreamInstance){

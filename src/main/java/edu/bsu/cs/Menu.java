@@ -39,7 +39,7 @@ public class Menu {
         revisionFormatter.printRevisionList(revisionList);
     }
 
-    private boolean validateUserInput(String userInput){
+    protected boolean validateUserInput(String userInput){
         return !userInput.isEmpty();
     }
 }

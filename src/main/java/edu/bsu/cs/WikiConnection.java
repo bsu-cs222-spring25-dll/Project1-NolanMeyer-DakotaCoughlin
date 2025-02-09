@@ -10,8 +10,8 @@ import java.nio.charset.StandardCharsets;
 public class WikiConnection {
 
     public InputStream search(String pageTitle){
-            String url = createRequestUrl(pageTitle);
-            return getInputStream(url);
+        String url = createRequestUrl(pageTitle);
+        return getInputStream(url);
     }
 
     protected String createRequestUrl(String pageTitle){
