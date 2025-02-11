@@ -36,7 +36,7 @@ public class Menu {
 
     private void inputSearchPrint(List<Revision> revisionList){
         System.out.println(parser.extractRedirect(parser.inputStreamInstance.openInputStream()));
-        revisionFormatter.printRevisionList(revisionList);
+        System.out.println(revisionFormatter.printRevisionList(revisionList));
     }
 
     protected boolean validateUserInput(String userInput){

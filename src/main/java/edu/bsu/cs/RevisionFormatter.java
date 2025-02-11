@@ -4,15 +4,18 @@ import java.util.List;
 
 public class RevisionFormatter {
 
-    public void printRevisionList(List<Revision> revisionList){
+    public String printRevisionList(List<Revision> revisionList){
 
         int lineNumber = 1;
 
+        StringBuilder output = new StringBuilder();
+
         for(Revision revision:revisionList){
-            System.out.printf("%d  %s",lineNumber,formatOutput(revision));
+            output.append(String.format("%d  %s",lineNumber,formatOutput(revision)));
             lineNumber++;
         }
 
+        return output.toString();
     }
 
     protected String formatOutput(Revision revision){
