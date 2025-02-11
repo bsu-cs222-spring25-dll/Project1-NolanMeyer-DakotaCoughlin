@@ -25,7 +25,7 @@ public class RevisionParser {
     protected JSONArray extractRevisions(InputStream inputStreamInstance){
         JSONArray output = new JSONArray();
         try {
-            JSONArray revisionArray = JsonPath.read(this.inputStreamInstance.openInputStream(),"$..revisions");
+            JSONArray revisionArray = JsonPath.read(inputStreamInstance,"$..revisions");
             output = (JSONArray) revisionArray.getFirst();
         }catch (Exception e) {
             ExceptionHandler.handleException(e,"No Wikipedia article could be found!");
