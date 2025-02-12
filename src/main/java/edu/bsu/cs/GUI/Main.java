@@ -91,11 +91,15 @@ public class Main extends Application {
         titleContainer.getChildren().add(imageView);
         imageView.setFitHeight(60);
         imageView.setFitWidth(60);
-
         parent.getChildren().add(titleContainer);
 
-        parent.getChildren().add(new Label(parser.extractRedirect(inputStream.openInputStream())));
-        parent.getChildren().add(new Label(output));
+        Label redirectLabel = new Label(parser.extractRedirect(inputStream.openInputStream()));
+        redirectLabel.setPadding(new Insets(0,0,10,0));
+        parent.getChildren().add(redirectLabel);
+
+        Label outputLabel = new Label(output);
+        outputLabel.setPadding(new Insets(0,0,10,10));
+        parent.getChildren().add(outputLabel);
 
         HBox backButtonContainer = new HBox();
         Button backButton = new Button("<-Back");
