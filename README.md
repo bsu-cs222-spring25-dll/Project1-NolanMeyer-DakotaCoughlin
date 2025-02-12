@@ -6,7 +6,9 @@ For this assigment we were tasked with creating an application that takes a Wiki
 <img width="681" alt="Screenshot 2025-02-07 at 8 55 30 AM" src="https://github.com/user-attachments/assets/d41f3a71-6cdc-496f-9ee1-d3f2d07ee14f" />
 
 ## Run Instructions
-To run this program please run the Main class!
+Command Line: To run this program please run the Main class outside of the GUI package!
+GUI: To run this program please run the Main class inside of the GUI package. Make sure that you're running it through gradle or it will not run correctly. 
+
 
 ## Revision class
 This class although simple, is a fundamental building block for the entire project. This contains two fields, a field for a username, and a field for a timestamp. This way we can further encapsulation and organization of our data.
