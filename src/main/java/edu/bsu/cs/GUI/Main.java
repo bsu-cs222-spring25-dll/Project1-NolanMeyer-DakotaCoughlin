@@ -11,11 +11,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class Main extends Application {
@@ -28,10 +32,15 @@ public class Main extends Application {
         VBox parent = new VBox();
 
         HBox titleContainer = new HBox();
-        Label title = new Label("Wikipedia Revision");
+        Label title = new Label("Wikipedia Revisions");
         title.setFont(new Font("Arial",35));
         titleContainer.getChildren().add(title);
         titleContainer.setAlignment(Pos.CENTER);
+        Image wikiImage = new Image(new FileInputStream("src/main/resources/wikiLogo.png"));
+        ImageView imageView = new ImageView(wikiImage);
+        imageView.setFitHeight(60);
+        imageView.setFitWidth(60);
+        titleContainer.getChildren().add(imageView);
         titleContainer.setPadding(new Insets(0,0,100,0));
         parent.getChildren().add(titleContainer);
 
@@ -45,7 +54,13 @@ public class Main extends Application {
 
         VBox buttonContainer = new VBox();
         Button getRevisionsButton = new Button("Get revisions!");
-        getRevisionsButton.setOnAction(actionEvent -> switchScene(stage,textField.getText()));
+        getRevisionsButton.setOnAction(actionEvent -> {
+            try {
+                switchScene(stage,textField.getText());
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
         buttonContainer.getChildren().add(getRevisionsButton);
         buttonContainer.setAlignment(Pos.CENTER);
         parent.getChildren().add(buttonContainer);
@@ -57,7 +72,7 @@ public class Main extends Application {
         stage.show();
     }
 
-    private void switchScene(Stage stage,String searchInput){
+    private void switchScene(Stage stage,String searchInput) throws FileNotFoundException {
         InputStream wikiResponse = wikipediaConnection.search(searchInput);
         RevisionInputStream inputStream = new RevisionInputStream(wikiResponse);
         parser = new RevisionParser(inputStream);
@@ -66,11 +81,17 @@ public class Main extends Application {
         VBox parent = new VBox();
 
         HBox titleContainer = new HBox();
-        Label title = new Label("Wikipedia Revision");
+        Label title = new Label("Wikipedia Revisions");
         title.setFont(new Font("Arial",35));
         titleContainer.getChildren().add(title);
         titleContainer.setAlignment(Pos.CENTER);
         titleContainer.setPadding(new Insets(0,0,20,0));
+        Image wikiImage = new Image(new FileInputStream("src/main/resources/wikiLogo.png"));
+        ImageView imageView = new ImageView(wikiImage);
+        titleContainer.getChildren().add(imageView);
+        imageView.setFitHeight(60);
+        imageView.setFitWidth(60);
+
         parent.getChildren().add(titleContainer);
 
         parent.getChildren().add(new Label(parser.extractRedirect(inputStream.openInputStream())));
