@@ -53,7 +53,7 @@ public class Main extends Application {
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.setWidth(600);
-        stage.setHeight(500);
+        stage.setHeight(550);
         stage.show();
     }
 
@@ -75,6 +75,18 @@ public class Main extends Application {
 
         parent.getChildren().add(new Label(parser.extractRedirect(inputStream.openInputStream())));
         parent.getChildren().add(new Label(output));
+
+        HBox backButtonContainer = new HBox();
+        Button backButton = new Button("<-Back");
+        backButton.setOnAction(actionEvent -> {
+            try {
+                start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        backButtonContainer.getChildren().add(backButton);
+        parent.getChildren().add(backButtonContainer);
 
         stage.setScene(new Scene(parent));
     }
