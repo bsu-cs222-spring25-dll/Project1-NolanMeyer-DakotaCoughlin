@@ -54,7 +54,8 @@ public class RevisionParser {
             if(!parsedRedirect.isEmpty()){
                 output = String.format("Redirected to %s",parsedRedirect.getFirst().toString());
             }
-        }catch (Exception e) {
+        }
+            catch (Exception e) {
             ExceptionHandler.handleException(e,"Could not load the input stream!");
         }
         return output;
