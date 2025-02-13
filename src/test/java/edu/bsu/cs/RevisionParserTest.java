@@ -1,5 +1,7 @@
 package edu.bsu.cs;
 
+import edu.bsu.cs.Exceptions.noArticleException;
+import edu.bsu.cs.Exceptions.openInputStreamException;
 import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RevisionParserTest {
 
     @Test
-    public void returnsFirstRevisionNameTest(){
+    public void returnsFirstRevisionNameTest() throws noArticleException, openInputStreamException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
         assert sampleFile != null;
         RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
@@ -21,7 +23,7 @@ public class RevisionParserTest {
     }
 
     @Test
-    public void returnsFirstRevisionTimeStampTest(){
+    public void returnsFirstRevisionTimeStampTest() throws noArticleException, openInputStreamException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
         assert sampleFile != null;
         RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
@@ -30,7 +32,7 @@ public class RevisionParserTest {
     }
 
     @Test
-    public void returnsListOfSize4(){
+    public void returnsListOfSize4() throws noArticleException, openInputStreamException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
         assert sampleFile != null;
         RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
@@ -39,7 +41,7 @@ public class RevisionParserTest {
     }
 
     @Test
-    public void extraRevisionsTest(){
+    public void extraRevisionsTest() throws noArticleException, openInputStreamException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
         assert sampleFile != null;
         RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
@@ -48,7 +50,7 @@ public class RevisionParserTest {
     }
 
     @Test
-    public void convertRevisionsToListTest(){
+    public void convertRevisionsToListTest() throws noArticleException, openInputStreamException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
         assert sampleFile != null;
         RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
@@ -58,7 +60,7 @@ public class RevisionParserTest {
     }
 
     @Test
-    public void extractRedirectTest(){
+    public void extractRedirectTest() throws openInputStreamException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("sample.json");
         assert sampleFile != null;
         RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));

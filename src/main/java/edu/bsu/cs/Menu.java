@@ -1,5 +1,9 @@
 package edu.bsu.cs;
 
+import edu.bsu.cs.Exceptions.networkErrorException;
+import edu.bsu.cs.Exceptions.noArticleException;
+import edu.bsu.cs.Exceptions.openInputStreamException;
+
 import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
@@ -17,18 +21,22 @@ public class Menu {
 
         if(validateUserInput(userInput)) {
 
-            List<Revision> revisionList = inputSearch(userInput);
+            try {
+                List<Revision> revisionList = inputSearch(userInput);
 
-            if (!revisionList.isEmpty()) {
-                inputSearchPrint(revisionList);
+                if (!revisionList.isEmpty()) {
+                    inputSearchPrint(revisionList);
+                }
+            }catch(noArticleException | networkErrorException | openInputStreamException e){
+                System.err.println(e.getMessage());
             }
 
         }else{
-            System.err.println("Please give me a Wikipedia title!");
+            System.err.println("Please enter an article!");
         }
     }
 
-    private List<Revision> inputSearch(String userInput) {
+    private List<Revision> inputSearch(String userInput) throws noArticleException, networkErrorException, openInputStreamException {
         InputStream wikiResponse = wikipediaConnection.search(userInput);
         parser = new RevisionParser(new RevisionInputStream(wikiResponse));
         return parser.parse();
@@ -36,7 +44,7 @@ public class Menu {
 
     private void inputSearchPrint(List<Revision> revisionList){
         System.out.println(parser.extractRedirect(parser.inputStreamInstance.openInputStream()));
-        revisionFormatter.printRevisionList(revisionList);
+        System.out.println(revisionFormatter.printRevisionList(revisionList));
     }
 
     protected boolean validateUserInput(String userInput){
