@@ -1,6 +1,7 @@
 package edu.bsu.cs;
 
-import java.io.ByteArrayInputStream;
+import edu.bsu.cs.Exceptions.networkErrorException;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -9,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 public class WikiConnection {
 
-    public InputStream search(String pageTitle){
+    public InputStream search(String pageTitle) throws networkErrorException {
         String url = createRequestUrl(pageTitle);
         return getInputStream(url);
     }
@@ -21,8 +22,8 @@ public class WikiConnection {
                 + encodedTitle + "&rvprop=timestamp|user&rvlimit=21&redirects";
     }
 
-    private InputStream getInputStream(String url){
-        InputStream output = new ByteArrayInputStream(new byte[0]);
+    private InputStream getInputStream(String url) throws networkErrorException {
+        InputStream output;
         try{
             @SuppressWarnings("deprecation")
             URL urlConnection = new URL(url);
@@ -31,7 +32,7 @@ public class WikiConnection {
                     "Revision Reporter/0.1 (nolan.meyer@bsu.edu)");
             output = connection.getInputStream();
         }catch (Exception e) {
-            System.err.println("There seems to be a network error.");
+            throw new networkErrorException();
         }
         return output;
     }

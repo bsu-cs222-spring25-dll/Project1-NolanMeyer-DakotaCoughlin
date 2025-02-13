@@ -1,5 +1,8 @@
 package edu.bsu.cs.GUI;
 
+import edu.bsu.cs.Exceptions.noArticleException;
+import edu.bsu.cs.Exceptions.networkErrorException;
+import edu.bsu.cs.Exceptions.openInputStreamException;
 import edu.bsu.cs.RevisionFormatter;
 import edu.bsu.cs.RevisionInputStream;
 import edu.bsu.cs.RevisionParser;
@@ -8,9 +11,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -31,18 +32,7 @@ public class Main extends Application {
 
         VBox parent = new VBox();
 
-        HBox titleContainer = new HBox();
-        Label title = new Label("Wikipedia Revisions");
-        title.setFont(new Font("Arial",35));
-        titleContainer.getChildren().add(title);
-        titleContainer.setAlignment(Pos.CENTER);
-        Image wikiImage = new Image(new FileInputStream("src/main/resources/wikiLogo.png"));
-        ImageView imageView = new ImageView(wikiImage);
-        imageView.setFitHeight(60);
-        imageView.setFitWidth(60);
-        titleContainer.getChildren().add(imageView);
-        titleContainer.setPadding(new Insets(0,0,100,0));
-        parent.getChildren().add(titleContainer);
+        createTitle(parent,100);
 
         Label articleLabel = new Label("Enter Article Title: ");
         HBox articleTitleInput = new HBox(articleLabel);
@@ -73,32 +63,37 @@ public class Main extends Application {
     }
 
     private void switchScene(Stage stage,String searchInput) throws FileNotFoundException {
-        InputStream wikiResponse = wikipediaConnection.search(searchInput);
-        RevisionInputStream inputStream = new RevisionInputStream(wikiResponse);
-        parser = new RevisionParser(inputStream);
-        String output = revisionFormatter.printRevisionList(parser.parse());
-
+        String output = "";
         VBox parent = new VBox();
+        parent.setAlignment(Pos.CENTER);
+        Alert errorPopUp = new Alert(Alert.AlertType.INFORMATION);
+        errorPopUp.setTitle("Error!");
 
-        HBox titleContainer = new HBox();
-        Label title = new Label("Wikipedia Revisions");
-        title.setFont(new Font("Arial",35));
-        titleContainer.getChildren().add(title);
-        titleContainer.setAlignment(Pos.CENTER);
-        titleContainer.setPadding(new Insets(0,0,20,0));
-        Image wikiImage = new Image(new FileInputStream("src/main/resources/wikiLogo.png"));
-        ImageView imageView = new ImageView(wikiImage);
-        titleContainer.getChildren().add(imageView);
-        imageView.setFitHeight(60);
-        imageView.setFitWidth(60);
-        parent.getChildren().add(titleContainer);
+        createTitle(parent,20);
 
-        Label redirectLabel = new Label(parser.extractRedirect(inputStream.openInputStream()));
-        redirectLabel.setPadding(new Insets(0,0,10,0));
-        parent.getChildren().add(redirectLabel);
+        if(searchInput.isEmpty()){
+            errorPopUp.setContentText("Please enter an article!");
+            errorPopUp.showAndWait();
+        }else {
+
+            try {
+                InputStream wikiResponse = wikipediaConnection.search(searchInput);
+                RevisionInputStream inputStream = new RevisionInputStream(wikiResponse);
+                parser = new RevisionParser(inputStream);
+                output = revisionFormatter.printRevisionList(parser.parse());
+
+                Label redirectLabel = new Label(parser.extractRedirect(inputStream.openInputStream()));
+                redirectLabel.setPadding(new Insets(0,0,10,0));
+                parent.getChildren().add(redirectLabel);
+
+            } catch (noArticleException | networkErrorException | openInputStreamException e) {
+                errorPopUp.setContentText(e.getMessage());
+                errorPopUp.showAndWait();
+            }
+        }
 
         Label outputLabel = new Label(output);
-        outputLabel.setPadding(new Insets(0,0,10,10));
+        outputLabel.setPadding(new Insets(0,0,10,180));
         parent.getChildren().add(outputLabel);
 
         HBox backButtonContainer = new HBox();
@@ -113,6 +108,23 @@ public class Main extends Application {
         backButtonContainer.getChildren().add(backButton);
         parent.getChildren().add(backButtonContainer);
 
-        stage.setScene(new Scene(parent));
+        if(!output.isEmpty()) {
+            stage.setScene(new Scene(parent));
+        }
+    }
+
+    public void createTitle(VBox parent,int padding) throws FileNotFoundException {
+        HBox titleContainer = new HBox();
+        Label title = new Label("Wikipedia Revisions");
+        title.setFont(new Font("Arial",35));
+        titleContainer.getChildren().add(title);
+        titleContainer.setAlignment(Pos.CENTER);
+        Image wikiImage = new Image(new FileInputStream("src/main/resources/wikiLogo.png"));
+        ImageView imageView = new ImageView(wikiImage);
+        imageView.setFitHeight(60);
+        imageView.setFitWidth(60);
+        titleContainer.getChildren().add(imageView);
+        titleContainer.setPadding(new Insets(0,0,padding,0));
+        parent.getChildren().add(titleContainer);
     }
 }

@@ -1,6 +1,7 @@
 package edu.bsu.cs;
 
 import com.jayway.jsonpath.JsonPath;
+import edu.bsu.cs.Exceptions.noArticleException;
 import net.minidev.json.JSONArray;
 
 import java.io.ByteArrayInputStream;
@@ -17,18 +18,18 @@ public class RevisionParser {
         this.inputStreamInstance = inputStream;
     }
 
-    public List<Revision> parse(){
+    public List<Revision> parse() throws noArticleException {
         JSONArray parsedRevisions = extractRevisions(new ByteArrayInputStream(this.inputStreamInstance.inputStream));
         return convertRevisionsToList(parsedRevisions);
     }
 
-    protected JSONArray extractRevisions(InputStream inputStreamInstance){
-        JSONArray output = new JSONArray();
+    protected JSONArray extractRevisions(InputStream inputStreamInstance) throws noArticleException {
+        JSONArray output;
         try {
             JSONArray revisionArray = JsonPath.read(inputStreamInstance,"$..revisions");
             output = (JSONArray) revisionArray.getFirst();
         }catch (Exception e) {
-            ExceptionHandler.handleException(e,"No Wikipedia article could be found!");
+            throw new noArticleException();
         }
         return output;
     }
@@ -54,9 +55,8 @@ public class RevisionParser {
             if(!parsedRedirect.isEmpty()){
                 output = String.format("Redirected to %s",parsedRedirect.getFirst().toString());
             }
-        }
-            catch (Exception e) {
-            ExceptionHandler.handleException(e,"Could not load the input stream!");
+        }catch (Exception e) {
+            output = "Could not load the input stream!";
         }
         return output;
     }
