@@ -24,7 +24,7 @@ public class WikiConnection {
     }
 
     private InputStream getInputStream(String url) throws networkErrorException {
-        InputStream output = new ByteArrayInputStream(new byte[0]);
+        InputStream output;
         try{
             @SuppressWarnings("deprecation")
             URL urlConnection = new URL(url);

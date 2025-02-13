@@ -25,10 +25,12 @@ public class RevisionFormatterTest {
         RevisionParser parser = new RevisionParser(new RevisionInputStream(sampleFile));
         List<Revision> revisionList = parser.parse();
         RevisionFormatter formatter = new RevisionFormatter();
-        assertEquals("1  2023-09-07T18:34:43Z  Miklogfeather\n" +
-                "2  2023-09-07T17:21:48Z  ModernDayTrilobite\n" +
-                "3  2023-09-02T15:06:03Z  Freefry\n" +
-                "4  2023-09-02T15:05:04Z  Freefry\n",formatter.printRevisionList(revisionList));
+        assertEquals("""
+                1  2023-09-07T18:34:43Z  Miklogfeather
+                2  2023-09-07T17:21:48Z  ModernDayTrilobite
+                3  2023-09-02T15:06:03Z  Freefry
+                4  2023-09-02T15:05:04Z  Freefry
+                """,formatter.printRevisionList(revisionList));
     }
 
 }

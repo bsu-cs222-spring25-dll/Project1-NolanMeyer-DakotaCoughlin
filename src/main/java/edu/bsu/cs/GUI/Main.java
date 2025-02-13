@@ -70,7 +70,7 @@ public class Main extends Application {
 
         createTitle(parent,20);
 
-        if(searchInput.equals("")){
+        if(searchInput.isEmpty()){
             output = "Please give me an article!";
         }else {
 

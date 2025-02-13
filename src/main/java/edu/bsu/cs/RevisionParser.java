@@ -24,7 +24,7 @@ public class RevisionParser {
     }
 
     protected JSONArray extractRevisions(InputStream inputStreamInstance) throws noArticleException {
-        JSONArray output = new JSONArray();
+        JSONArray output;
         try {
             JSONArray revisionArray = JsonPath.read(inputStreamInstance,"$..revisions");
             output = (JSONArray) revisionArray.getFirst();
