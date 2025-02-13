@@ -11,9 +11,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -65,13 +63,17 @@ public class Main extends Application {
     }
 
     private void switchScene(Stage stage,String searchInput) throws FileNotFoundException {
-        String output;
+        String output = "";
         VBox parent = new VBox();
+        parent.setAlignment(Pos.CENTER);
+        Alert errorPopUp = new Alert(Alert.AlertType.INFORMATION);
+        errorPopUp.setTitle("Error!");
 
         createTitle(parent,20);
 
         if(searchInput.isEmpty()){
-            output = "Please give me an article!";
+            errorPopUp.setContentText("Please enter an article!");
+            errorPopUp.showAndWait();
         }else {
 
             try {
@@ -85,12 +87,13 @@ public class Main extends Application {
                 parent.getChildren().add(redirectLabel);
 
             } catch (noArticleException | networkErrorException | openInputStreamException e) {
-                output = e.getMessage();
+                errorPopUp.setContentText(e.getMessage());
+                errorPopUp.showAndWait();
             }
         }
 
         Label outputLabel = new Label(output);
-        outputLabel.setPadding(new Insets(0,0,10,10));
+        outputLabel.setPadding(new Insets(0,0,10,180));
         parent.getChildren().add(outputLabel);
 
         HBox backButtonContainer = new HBox();
@@ -105,7 +108,9 @@ public class Main extends Application {
         backButtonContainer.getChildren().add(backButton);
         parent.getChildren().add(backButtonContainer);
 
-        stage.setScene(new Scene(parent));
+        if(!output.isEmpty()) {
+            stage.setScene(new Scene(parent));
+        }
     }
 
     public void createTitle(VBox parent,int padding) throws FileNotFoundException {
