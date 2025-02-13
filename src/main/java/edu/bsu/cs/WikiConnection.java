@@ -2,7 +2,6 @@ package edu.bsu.cs;
 
 import edu.bsu.cs.Exceptions.networkErrorException;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
