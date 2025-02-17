@@ -97,5 +97,5 @@ This creates and customizes the getRevisions button seen on the first screen. If
 This creates and customizes the Article Label.
 
 ## Authors by Alphabetical Order
-Dakota Coughlin
+Dakota Coughlin\
 Nolan Meyer
