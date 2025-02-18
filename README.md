@@ -67,11 +67,8 @@ This is a method to print our results of the inputSearch and if it was redirecte
 ## Main class
 This class creates an instance of the menu class and calls it's runMenu method.
 
-## Exception Handler Class
-This class is used to handle exceptions. We refactored this to add another layer of abstraction so we have the flexibility to also show errors on a GUI for the second iteration of this project. 
-
-### handleException method
-This method takes an exception, and gives a message that we will use. It will then create an error message and print it to System.err.
+## Error Handling
+We did our error handling by creating custom exceptions. We then threw those exceptions up to the view section to be handled there. That way we had good view model seperation between the view and the model.
 
 # GUI Version
 
