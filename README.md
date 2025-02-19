@@ -87,7 +87,7 @@ This creates and customizes a title.
 ### createOutputLabel method
 This creates and customizes an output label, and implements a scroll pane so the output does not go off screen.
 
-### createGetRevisionsButton
+### createGetRevisionsButton method
 This creates and customizes the getRevisions button seen on the first screen. If this button is pressed it will attempt to switch to the second screen and process the users request the same way as in the non-GUI version.
 
 ### createArticleLabel method
